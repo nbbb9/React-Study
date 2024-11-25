@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; // HTTP 요청을 위한 라이브러리
 
 function SignupPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const navigate = useNavigate();//페이지 이동을 위한 Hook
+    const navigate = useNavigate();
 
-    const handleSignup = () => {
-        if (!email || !password || !confirmPassword) {
+    const handleSignup = async () => {
+        if (!name || !email || !password || !confirmPassword) {
             alert("모든 필드를 입력해주세요.");
             return;
         }
@@ -19,8 +20,22 @@ function SignupPage() {
             return;
         }
 
-        alert("회원가입 성공!");
-        navigate("/"); // 회원가입 후 로그인 페이지로 이동
+        try {
+            // 백엔드로 POST 요청
+            const response = await axios.post("http://localhost:8080/api/v1/signup", {
+                name,
+                email,
+                password,
+            });
+
+            if (response.status === 200) {
+                alert("회원가입 성공!");
+                navigate("/"); // 회원가입 후 로그인 페이지로 이동
+            }
+        } catch (error) {
+            console.error("회원가입 에러:", error);
+            alert("회원가입에 실패했습니다.");
+        }
     };
 
     return (
