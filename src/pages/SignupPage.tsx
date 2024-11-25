@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,11 +27,25 @@ function SignupPage() {
         <>
             <section className="flex items-center justify-center min-h-screen bg-white">
                 <div className="w-full max-w-md p-8 space-y-4 bg-gray-50 rounded shadow-xl">
-                    <h1 className="text-2xl font-bold text-center">회원가입</h1>
+                    <h1 className="text-2xl font-bold text-center">SignUp</h1>
+
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                            Name
+                        </label>
+                        <input
+                            type="name"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="이름을 입력하세요"
+                            className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
 
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                            이메일
+                            Email
                         </label>
                         <input
                             type="email"
@@ -44,7 +59,7 @@ function SignupPage() {
 
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            비밀번호
+                            Password
                         </label>
                         <input
                             type="password"
@@ -58,7 +73,7 @@ function SignupPage() {
 
                     <div>
                         <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                            비밀번호 확인
+                            Confirm Password
                         </label>
                         <input
                             type="password"
@@ -74,7 +89,7 @@ function SignupPage() {
                         onClick={handleSignup}
                         className="w-full py-2 mt-4 text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
-                        회원가입
+                        Signup
                     </button>
 
                     <p className="text-sm text-center text-gray-500">

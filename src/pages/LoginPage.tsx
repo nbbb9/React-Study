@@ -31,7 +31,7 @@ function LoginPage() {
     };
 
     useEffect(() => {
-        alert('로그인 페이지입니다.');
+        // alert('로그인 페이지입니다.');
       }, []);
     //컴포넌트가 화면 가장 처음에 렌더링 될 때 한 번만 실행하고 싶다면 deps 위치에 빈 배열을 넣는다.(마운트 될 때만 실행된다.)
     //배열을 생략한다면 리렌더링 될 때마다 실행된다.
@@ -40,11 +40,11 @@ function LoginPage() {
         <>
         <section className="flex items-center justify-center min-h-screen bg-white">
                 <div className="w-full max-w-md p-8 space-y-4 bg-gray-50 rounded shadow-xl">
-                    <h1 className="text-2xl font-bold text-center">로그인</h1>
+                    <h1 className="text-2xl font-bold text-center">LogIn</h1>
 
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                            이메일
+                            Email
                         </label>
                         <input
                             type="email"
@@ -58,7 +58,7 @@ function LoginPage() {
 
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            비밀번호
+                            Password
                         </label>
                         <input
                             type="password"
@@ -73,7 +73,7 @@ function LoginPage() {
                     <button
                         onClick={handleLogin}
                         className="w-full py-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        로그인
+                        Login
                     </button>
 
                     <p className="text-sm text-center text-gray-500">
