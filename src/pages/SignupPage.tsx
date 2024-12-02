@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // HTTP 요청을 위한 라이브러리
+import axios from "axios";
+
+const baseURL = "http://localhost:8080/api/v1/reactstudy"
 
 function SignupPage() {
     const [name, setName] = useState("");
@@ -22,7 +24,7 @@ function SignupPage() {
 
         try {
             // 백엔드로 POST 요청
-            const response = await axios.post("http://localhost:8080/api/v1/signup", {
+            const response = await axios.post(`${baseURL}/signup`, {
                 name,
                 email,
                 password,
@@ -30,7 +32,7 @@ function SignupPage() {
 
             if (response.status === 200) {
                 alert("회원가입 성공!");
-                navigate("/"); // 회원가입 후 로그인 페이지로 이동
+                navigate("/login"); // 회원가입 후 로그인 페이지로 이동
             }
         } catch (error) {
             console.error("회원가입 에러:", error);

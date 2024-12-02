@@ -2,6 +2,9 @@
 //https://world-developer.tistory.com/85 >> 테일윈드 적용 안될 때 해결
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+
+const baseURL = "http://localhost:8080/api/v1/reactstudy"
 
 function LoginPage() {
     /*
@@ -19,20 +22,35 @@ function LoginPage() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();//페이지 이동을 위한 Hook
+    const navigate = useNavigate(); // 페이지 이동을 위한 Hook
 
-    const handleLogin = () => {//로그인 버튼 클릭 시 동작
-        if (email && password) {
-            console.log("로그인 시도:", { email, password });
-            alert("로그인 성공!");
-        } else {
-            alert("이메일과 비밀번호를 입력해주세요.");
+    const login = async () => {
+        try {
+            if (!email || !password) {
+                alert('아이디(이메일) 또는 비밀번호를 입력하세요.');
+                return;
+            }
+
+            console.log(email, password);
+
+            const response = await axios.post(`${baseURL}/login`, { email, password }, { headers: { 'Content-Type': 'application/json' } } );// JSON 타입 명시;
+
+            if (response.status === 200) {
+                alert('로그인 성공!');
+                navigate('/main'); // 로그인 성공 시 메인 페이지로 이동
+            }
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error) && error.response?.status === 401) {
+                alert('아이디 또는 비밀번호가 잘못되었습니다.');
+            } else {
+                alert('서버에 문제가 발생했습니다.');
+            }
         }
     };
-
-    useEffect(() => {
-        // alert('로그인 페이지입니다.');
-      }, []);
+        
+    // useEffect(() => {
+    //     alert('로그인 페이지입니다.');
+    //   }, []);
     //컴포넌트가 화면 가장 처음에 렌더링 될 때 한 번만 실행하고 싶다면 deps 위치에 빈 배열을 넣는다.(마운트 될 때만 실행된다.)
     //배열을 생략한다면 리렌더링 될 때마다 실행된다.
 
@@ -71,7 +89,7 @@ function LoginPage() {
                     </div>
 
                     <button
-                        onClick={handleLogin}
+                        onClick={login}
                         className="w-full py-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         Login
                     </button>
