@@ -11,8 +11,8 @@ interface WriteModalProps {
 const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
     if (!isOpen) return null; //조건부 랜더링(false일 경우 아무것도 랜더링하지 않음.)
 
-    const [title, setTitle] = useState('');//제목 상태
-    const [content, setContent] = useState('');//내용 상태
+    const [title, setTitle] = useState<string>('');//제목 상태
+    const [content, setContent] = useState<string>('');//내용 상태
     const [image, setImage] = useState<File | null>(null);//이미지 상태
 
     const handleSubmit = async () => {//DB에 저장하는 함수
@@ -29,12 +29,14 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
         if (image) formData.append('image', image);
 
         try{
-            const response = await axios.post('http://localhost:8080/api/v1/reactstudy/post', formData, {
+            const response = await axios.post('http://localhost:8080/api/v1/reactstudy/post', formData
+               // , {
                 // headers: {
                 //     'Content-Type': 'multipart/form-data',
                 //     Authorization: `Bearer ${localStorage.getItem('token')}`, // 로그인 토큰 전달
                 // },
-            });
+            //}
+        );
 
             if(response.status === 201){
                 alert('게시글이 성공적으로 저장되었습니다.');
@@ -46,7 +48,7 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
         }
     };
 
-    return isOpen(
+    return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white w-[90%] max-w-3xl rounded-lg shadow-lg">
                 {/* 헤더 */}
