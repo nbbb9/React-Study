@@ -6,10 +6,16 @@ import axios from 'axios';
 const baseURL = "http://localhost:8080/api/v1/reactstudy";
 
 function MainPage() {
-    const [isModalOpen, setIsModalOpen] = useState(false); // 모달의 열림 상태 (초기값 false)
-    const [posts, setPosts] = useState([]); // 게시글 상태
-    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+    const [isModalOpen, setIsModalOpen] = useState(false);//모달의 열림 상태 (초기값 false)
+    const [posts, setPosts] = useState([]);//게시글 상태
+    const [currentPage, setCurrentPage] = useState(1);//현재 페이지 상태
     const postsPerPage = 6; // 페이지당 게시글 수
+
+    const indexOfLastPost = currentPage * postsPerPage;//마지막 게시글의 인덱스. 페이지당 게시글이 6개이고 현재 페이지가 1이면 6
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;//첫 번째 게시글의 인덱스. 페이지당 게시글이 6개이고 현재 페이지가 1이면 0
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);//게시글 배열에서 현재 페이지에 해당하는 게시글들만 잘라낸 배열.
+
+    const paginate = (pageNumber : number) => setCurrentPage(pageNumber);
 
     const fetchPosts = async () => { // 게시글 조회
         try {
@@ -23,12 +29,6 @@ function MainPage() {
     useEffect(() => {
         fetchPosts();
     }, []);
-
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-
-    const paginate = (pageNumber : number) => setCurrentPage(pageNumber);
 
     return (
         <>
@@ -62,7 +62,7 @@ function MainPage() {
                 </div>
 
                 {/* 게시글 리스트 */}
-                <div className="container mx-auto mt-10 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {/* <div className="container mx-auto mt-10 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     {currentPosts.map((post, index) => (
                         <div key={index} className="bg-white shadow-md rounded-md overflow-hidden h-[320px] w-[330px] mx-auto">
                             <div className="h-[230px] bg-gray-300 flex items-center justify-center">
@@ -74,12 +74,37 @@ function MainPage() {
                             </div>
                         </div>
                     ))}
+                </div> */}
+                {/* 게시글 리스트 */}
+                <div className="container mx-auto mt-10 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                    {currentPosts.map((post, index) => (
+                        <div key={index} className="bg-white shadow-md rounded-md overflow-hidden h-[320px] w-[330px] mx-auto">
+                            {/* 이미지 영역 */}
+                            <div className="h-[230px] bg-gray-300 flex items-center justify-center">
+                                {post.imageUrl ? (
+                                    <img
+                                        src={`${baseURL}${post.imageUrl}`}
+                                        className="object-cover h-full w-full"
+                                    />
+                                ) : (
+                                    <span className="text-gray-500">이미지 없음</span>
+                                )}
+                            </div>
+                            {/* 텍스트 영역 */}
+                            <div className="p-4">
+                                <h2 className="text-lg font-bold text-gray-800">{post.title}</h2>
+                                <p className="text-gray-600 mt-2">{post.content}</p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
+
 
                 {/* 페이지네이션 */}
                 <div className="flex justify-center mt-8">
                     <nav>
                         <ul className="flex space-x-2">
+                            {/* 전체 페이지 수만큼 배열을 만든다. 게시글이 15개이고 postPerPage가 6이라면 [1,2,3]이라는 배열이 생성된다.*/}
                             {Array.from({ length: Math.ceil(posts.length / postsPerPage) }, (_, i) => i + 1).map(pageNumber => (
                                 <li key={pageNumber}>
                                     <button
@@ -98,7 +123,10 @@ function MainPage() {
             {/* 모달 컴포넌트 */}
             <BoardModal 
                 isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
+                onClose={() => {
+                    setIsModalOpen(false)
+                    fetchPosts()
+                }} 
             />
         </>
     );

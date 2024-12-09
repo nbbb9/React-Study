@@ -15,38 +15,37 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
     const [content, setContent] = useState<string>('');//내용 상태
     const [image, setImage] = useState<File | null>(null);//이미지 상태
 
-    const handleSubmit = async () => {//DB에 저장하는 함수
-        if (!title || !content){
+    const handleSubmit = async () => {
+        if (!title || !content) {
             alert('제목과 내용을 입력하세요.');
             return;
         }
-
-        const formData = new FormData();//??
-
+    
+        const formData = new FormData();
+    
         formData.append('title', title);
         formData.append('content', content);
-
-        if (image) formData.append('image', image);
-
-        try{
-            const response = await axios.post('http://localhost:8080/api/v1/reactstudy/post', formData
-               // , {
-                // headers: {
-                //     'Content-Type': 'multipart/form-data',
-                //     Authorization: `Bearer ${localStorage.getItem('token')}`, // 로그인 토큰 전달
-                // },
-            //}
-        );
-
-            if(response.status === 201){
+    
+        if (image) formData.append('image', image); // 이미지 파일 포함
+    
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/reactstudy/addpost', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`, // 인증 토큰 전달
+                },
+            });
+    
+            if (response.status === 200) {
                 alert('게시글이 성공적으로 저장되었습니다.');
                 onClose();
             }
-        }catch(error){
-            console.error("게시글 등록 중 오류 발생 : ", error);
+        } catch (error) {
+            console.error('게시글 등록 중 오류 발생:', error);
             alert('게시글 등록에 실패했습니다.');
         }
     };
+    
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
