@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import MainPage from "./pages/MainPage";
+import PhotoTestPage from "./pages/PhotoTestPage";
 
 function AppRouter() {
     return (
@@ -18,6 +19,9 @@ function AppRouter() {
 
                 {/* 메인 페이지 */}
                 <Route path="/main" element={<MainPage />} />
+
+                {/* 사진 테스트 페이지 */}
+                <Route path="/phototest" element={<PhotoTestPage />} />
             </Routes>
         </Router>
     );
