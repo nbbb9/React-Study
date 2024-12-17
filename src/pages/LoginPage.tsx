@@ -4,10 +4,13 @@ import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { baseURL } from '../config/api';
+import { FindAccountModal } from '../components/modal/FindAccountModal';
 
 export const LoginPage: FC<{}> = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showModal, setShowModal] = useState(false); // 모달 상태
+    const [modalType, setModalType] = useState<'email' | 'password'>('email'); // 모달 타입
     const navigate = useNavigate();//페이지 이동을 위한 Hook
 
     const login = async () => {//로그인
@@ -28,6 +31,11 @@ export const LoginPage: FC<{}> = () => {
                 alert('서버에 문제가 발생했습니다.');
             }
         }
+    };
+
+    const openModal = (type: 'email' | 'password') => {
+        setModalType(type);
+        setShowModal(true);
     };
     
     // useEffect(() => {
@@ -83,15 +91,30 @@ export const LoginPage: FC<{}> = () => {
                         </button>
                     </p>
                     <p className="text-sm text-center text-gray-500">
-                        아이디 또는 비밀번호를 잊으셨나요?{" "}
+                        아이디를 잊으셨나요?{" "}
                         <button 
-                            onClick={() => navigate("")}
+                            onClick={() => openModal('email')}
                             className="text-blue-500 hover:underline">
-                            계정찾기
+                            아이디 찾기
+                        </button>
+                    </p>
+                    <p className="text-sm text-center text-gray-500">
+                        비밀번호를 잊으셨나요?{" "}
+                        <button 
+                            onClick={() => openModal('password')}
+                            className="text-blue-500 hover:underline">
+                            비밀번호 찾기
                         </button>
                     </p>
                 </div>
             </section>
+            {/* 모달 컴포넌트 */}
+            {showModal && (
+                <FindAccountModal
+                    type={modalType}
+                    onClose={() => setShowModal(false)}
+                />
+            )}
         </>
     );
 }

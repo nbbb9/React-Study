@@ -1,12 +1,13 @@
 /* eslint-disable */
 import { FC, useEffect, useState } from 'react';
-import BoardModal from "../modal/WriteModal";
+import { WriteModal } from "../components/modal/WriteModal";
 import axios from 'axios';
 import { baseURL } from '../config/api';
+import { Post } from '../types/posts';
 
 export const MainPage: FC<{}> = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);//모달의 열림 상태 (초기값 false)
-    const [posts, setPosts] = useState([]);//게시글 상태
+    const [posts, setPosts] = useState<Post[]>([]);//게시글 상태
     const [currentPage, setCurrentPage] = useState(1);//현재 페이지 상태
     const postsPerPage = 6; // 페이지당 게시글 수
     const indexOfLastPost = currentPage * postsPerPage;//마지막 게시글의 인덱스. 페이지당 게시글이 6개이고 현재 페이지가 1이면 6
@@ -40,10 +41,7 @@ export const MainPage: FC<{}> = () => {
                                 <a href="#" className="hover:text-gray-200">Home</a>
                             </li>
                             <li>
-                                <a href="#" className="hover:text-gray-200">About</a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-gray-200">Contact</a>
+                                <a href="#" className="hover:text-gray-200">MyPage</a>
                             </li>
                         </ul>
                     </nav>
@@ -119,7 +117,7 @@ export const MainPage: FC<{}> = () => {
             </section>
 
             {/* 모달 컴포넌트 */}
-            <BoardModal 
+            <WriteModal 
                 isOpen={isModalOpen} 
                 onClose={() => {
                     setIsModalOpen(false)

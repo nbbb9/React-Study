@@ -5,7 +5,6 @@ import { MainPage } from "./pages/MainPage";
 import { PhotoTestPage } from "./pages/PhotoTestPage";
 
 const AppRouter : RouteObject[] =  [
-
     {
         path: "/",
         element: <LoginPage />,
@@ -21,7 +20,7 @@ const AppRouter : RouteObject[] =  [
     {
         path: "/phototest",
         element: <PhotoTestPage />
-    }
+    },
 
 ];
 

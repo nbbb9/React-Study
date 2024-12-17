@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { FC, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { FC, useState } from 'react'
 import axios from "axios";
-import { baseURL } from '../config/api';
+import { baseURL } from '../../config/api';
+import { SingleImageDragUpload } from '../../components/File/SingleFileDragUpload';
 
 export const PhotoTestPage: FC<{}> = () => {
     const [preview, setPreview] = useState(null);
@@ -70,6 +70,17 @@ export const PhotoTestPage: FC<{}> = () => {
                 >
                     업로드
                 </button>
+            </section>
+            <section>
+                <SingleImageDragUpload
+                    currentUrl={}
+                    setImage={(url: string) => {
+                        setEquipFormValue({ ...equipFormValue, url: url });
+                    }}
+                    setFile={setEquipFile}
+                    editable
+                    height="280px"
+                />
             </section>
         </>
     );

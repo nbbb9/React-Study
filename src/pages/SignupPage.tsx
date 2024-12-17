@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from '../config/api';
-import { Account } from "./users/type";
+import { Account } from "../types/user";
 
 const initAccount: Account = {//회원가입 입력창 초기값
     name: "",

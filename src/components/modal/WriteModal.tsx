@@ -1,20 +1,21 @@
 /* eslint-disable */
 import axios from "axios";
 import { useState, FC } from "react";
-import { baseURL } from '../config/api';
-import { Post } from "../pages/posts/type";
+import { baseURL } from '../../config/api';
+import { Post } from "../../types/posts";
 interface WriteModalProps {
     isOpen: boolean;
     onClose: () => void;
     // onSave: (title: string, content: string, image: File | null) => void;
 }
 
-const initPost: Post = {//게시글 작성 모달 초기값
+const initPost: Post = {
     title: "",
     content: "",
+    imageUrl: ""
 }
 
-const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
+export const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
     if (!isOpen) return null; //조건부 랜더링(false일 경우 아무것도 랜더링하지 않음.)
 
     const [postValue, setPostValue] = useState<Post>(initPost);
@@ -65,8 +66,6 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
                         &times;
                     </button>
                 </div>
-
-                {/* 내용 */}
                 <div className="p-6 space-y-4">
                     {/* 제목 입력 */}
                     <div>
@@ -87,7 +86,7 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
                             placeholder="내용을 입력하세요"
                             value={postValue.content}
                             onChange={(e) => setPostValue({...postValue, content : e.target.value})}
-                            rows="5"
+                            rows={5}
                             className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -96,7 +95,7 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
                     <div>
                         <label htmlFor="image" className="block text-sm font-medium text-gray-700">이미지 업로드</label>
                         <input 
-                            type="file" //파일을 업로드 할 때 사용
+                            type="file"//파일을 업로드 할 때 사용
                             accept="image/*"
                             onChange={(e) => setImage(e?.target?.files[0])}
                             className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -121,5 +120,3 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
         </div>
     )
 };
-
-export default WriteModal;
