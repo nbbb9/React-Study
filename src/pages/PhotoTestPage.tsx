@@ -31,7 +31,7 @@ export const PhotoTestPage: FC<{}> = () => {
         formData.append('image', selectedFile); // 파일 추가
 
         try {
-            const response = await axios.post('http://localhost:8080/api/images', formData, {
+            const response = await axios.post(`${baseURL}images`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
