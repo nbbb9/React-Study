@@ -72,7 +72,7 @@ export const PhotoTestPage: FC<{}> = () => {
                 </button>
             </section>
             <section>
-                <SingleImageDragUpload
+                {/* <SingleImageDragUpload
                     currentUrl={}
                     setImage={(url: string) => {
                         setEquipFormValue({ ...equipFormValue, url: url });
@@ -80,7 +80,7 @@ export const PhotoTestPage: FC<{}> = () => {
                     setFile={setEquipFile}
                     editable
                     height="280px"
-                />
+                /> */}
             </section>
         </>
     );
