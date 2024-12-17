@@ -1,35 +1,41 @@
 /* eslint-disable */
 import axios from "axios";
 import { useState, FC } from "react";
-
+import { baseURL } from '../config/api';
+import { Post } from "../pages/posts/type";
 interface WriteModalProps {
     isOpen: boolean;
     onClose: () => void;
     // onSave: (title: string, content: string, image: File | null) => void;
 }
 
+const initPost: Post = {//게시글 작성 모달 초기값
+    title: "",
+    content: "",
+}
+
 const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
     if (!isOpen) return null; //조건부 랜더링(false일 경우 아무것도 랜더링하지 않음.)
 
-    const [title, setTitle] = useState<string>('');//제목 상태
-    const [content, setContent] = useState<string>('');//내용 상태
+    const [postValue, setPostValue] = useState<Post>(initPost);
+
     const [image, setImage] = useState<File | null>(null);//이미지 상태
 
     const handleSubmit = async () => {
-        if (!title || !content) {
+        if (!postValue.title || !postValue.content) {
             alert('제목과 내용을 입력하세요.');
             return;
         }
     
         const formData = new FormData();
     
-        formData.append('title', title);
-        formData.append('content', content);
+        formData.append('title', postValue.title);
+        formData.append('content', postValue.content);
     
         if (image) formData.append('image', image); // 이미지 파일 포함
     
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/reactstudy/addpost', formData, {
+            const response = await axios.post(`${baseURL}/addpost`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${localStorage.getItem('token')}`, // 인증 토큰 전달
@@ -68,8 +74,8 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
                         <input 
                             type="text"
                             placeholder="제목을 입력하세요"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            value={postValue.title}
+                            onChange={(e) => setPostValue({...postValue, title : e.target.value})}
                             className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
@@ -79,8 +85,8 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
                         <label htmlFor="content" className="block text-sm font-medium text-gray-700">내용</label>
                         <textarea 
                             placeholder="내용을 입력하세요"
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
+                            value={postValue.content}
+                            onChange={(e) => setPostValue({...postValue, content : e.target.value})}
                             rows="5"
                             className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
@@ -92,7 +98,7 @@ const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
                         <input 
                             type="file" //파일을 업로드 할 때 사용
                             accept="image/*"
-                            onChange={(e) => setImage(e.target.files[0])}
+                            onChange={(e) => setImage(e?.target?.files[0])}
                             className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>

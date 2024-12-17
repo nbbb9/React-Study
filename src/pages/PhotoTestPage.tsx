@@ -1,9 +1,10 @@
 /* eslint-disable */
-import { useState, useEffect } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { baseURL } from '../config/api';
 
-function PhotoTestPage() {
+export const PhotoTestPage: FC<{}> = () => {
     const [preview, setPreview] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -73,5 +74,3 @@ function PhotoTestPage() {
         </>
     );
 }
-
-export default PhotoTestPage;

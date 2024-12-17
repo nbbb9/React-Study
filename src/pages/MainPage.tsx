@@ -1,27 +1,26 @@
 /* eslint-disable */
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import BoardModal from "../modal/WriteModal";
 import axios from 'axios';
+import { baseURL } from '../config/api';
 
-const baseURL = "http://localhost:8080/api/v1/reactstudy";
-
-function MainPage() {
+export const MainPage: FC<{}> = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);//모달의 열림 상태 (초기값 false)
     const [posts, setPosts] = useState([]);//게시글 상태
     const [currentPage, setCurrentPage] = useState(1);//현재 페이지 상태
     const postsPerPage = 6; // 페이지당 게시글 수
-
     const indexOfLastPost = currentPage * postsPerPage;//마지막 게시글의 인덱스. 페이지당 게시글이 6개이고 현재 페이지가 1이면 6
     const indexOfFirstPost = indexOfLastPost - postsPerPage;//첫 번째 게시글의 인덱스. 페이지당 게시글이 6개이고 현재 페이지가 1이면 0
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);//게시글 배열에서 현재 페이지에 해당하는 게시글들만 잘라낸 배열.
 
     const paginate = (pageNumber : number) => setCurrentPage(pageNumber);
 
-    const fetchPosts = async () => { // 게시글 조회
+    const fetchPosts = async () => {//게시글 조회
         try {
             const response = await axios.get(`${baseURL}`);
             setPosts(response.data);
         } catch (error) {
+            alert("서버에 문제가 발생했습니다.");
             console.error("Error fetching posts:", error);
         }
     };
@@ -99,7 +98,6 @@ function MainPage() {
                     ))}
                 </div>
 
-
                 {/* 페이지네이션 */}
                 <div className="flex justify-center mt-8">
                     <nav>
@@ -128,8 +126,7 @@ function MainPage() {
                     fetchPosts()
                 }} 
             />
+            
         </>
     );
 }
-
-export default MainPage;
