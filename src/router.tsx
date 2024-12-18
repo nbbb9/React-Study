@@ -1,8 +1,9 @@
+/* eslint-disable */
 import { BrowserRouter as Router, Routes, Route, Navigate, RouteObject } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
 import { MainPage } from "./pages/MainPage";
-import { PhotoTestPage } from "./pages/PhotoTestPage";
+import { PhotoTestPage } from "./pages/test/PhotoTestPage";
 
 const AppRouter : RouteObject[] =  [
     {
