@@ -10,7 +10,7 @@ export const LoginPage: FC<{}> = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showModal, setShowModal] = useState(false); // 모달 상태
-    const [modalType, setModalType] = useState<'email' | 'password'>('email'); // 모달 타입
+    const [modalType, setModalType] = useState<'email' | 'password'>('email');//모달 타입
     const navigate = useNavigate();//페이지 이동을 위한 Hook
 
     const login = async () => {//로그인
@@ -21,8 +21,8 @@ export const LoginPage: FC<{}> = () => {
             }
             const response = await axios.post(`${baseURL}/login`, { email, password }, { headers: { 'Content-Type': 'application/json' } } );// JSON 타입 명시;
             if (response.status === 200) {
-                alert('로그인 성공!');
                 navigate('/main');//로그인 성공 시 메인 페이지로 이동
+                alert('로그인 성공!');
             }
         } catch (error: unknown) {
             if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -38,12 +38,6 @@ export const LoginPage: FC<{}> = () => {
         setShowModal(true);
     };
     
-    // useEffect(() => {
-    //     alert('로그인 페이지입니다.');
-    //   }, []);
-    //컴포넌트가 화면 가장 처음에 렌더링 될 때 한 번만 실행하고 싶다면 deps 위치에 빈 배열을 넣는다.(마운트 될 때만 실행된다.)
-    //배열을 생략한다면 리렌더링 될 때마다 실행된다.
-
     return (
         <>
             <section className="flex items-center justify-center min-h-screen bg-white">

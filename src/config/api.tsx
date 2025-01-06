@@ -1,3 +1,4 @@
+/* eslint-disable */
 //해당 페이지는 나중에 진행
 
 import axios, { AxiosError } from "axios";
