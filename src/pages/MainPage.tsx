@@ -44,7 +44,6 @@ export const MainPage: FC<{}> = () => {
                     <li className="py-2 px-4 hover:text-2xl cursor-pointer">menu</li>
                 </ul>
             </aside>
-
             {/* 메인 컨텐츠 */}
             <main className="ml-64 w-full">
                     {/* 상단 헤더 */}
@@ -62,7 +61,6 @@ export const MainPage: FC<{}> = () => {
                             </button>
                         </div>
                     </div>
-
                 <div className="pt-20 px-6">
                     {/* 게시글 리스트 */}
                     <div className="mt-10 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -78,7 +76,6 @@ export const MainPage: FC<{}> = () => {
                             </div>
                         ))}
                     </div>
-
                     {/* 페이지네이션 */}
                     <div className="flex justify-center mt-8">
                         <nav>
@@ -97,8 +94,7 @@ export const MainPage: FC<{}> = () => {
                         </nav>
                     </div>
                 </div>
-
-                {/* 모달 컴포넌트 */}
+                {/* 모달 */}
                 <WriteModal
                     isOpen={isModalOpen}
                     onClose={() => {

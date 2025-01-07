@@ -9,8 +9,8 @@ import { FindAccountModal } from '../components/modal/FindAccountModal';
 export const LoginPage: FC<{}> = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [showModal, setShowModal] = useState(false); // 모달 상태
-    const [modalType, setModalType] = useState<'email' | 'password'>('email');//모달 타입
+    const [showModal, setShowModal] = useState(false);//모달 열림 상태
+    const [modalType, setModalType] = useState<'email' | 'password'>('email');//모달 타입(이메일 찾기 or 비밀번호 변경)
     const navigate = useNavigate();//페이지 이동을 위한 Hook
 
     const login = async () => {//로그인
@@ -25,7 +25,7 @@ export const LoginPage: FC<{}> = () => {
                 alert('로그인 성공!');
             }
         } catch (error: unknown) {
-            if (axios.isAxiosError(error) && error.response?.status === 401) {
+            if (axios.isAxiosError(error) && error.response?.status === 403) {
                 alert('아이디 또는 비밀번호가 잘못되었습니다.');
             } else {
                 alert('서버에 문제가 발생했습니다.');
@@ -97,12 +97,12 @@ export const LoginPage: FC<{}> = () => {
                         <button 
                             onClick={() => openModal('password')}
                             className="text-blue-500 hover:underline">
-                            비밀번호 찾기
+                            비밀번호 변경
                         </button>
                     </p>
                 </div>
             </section>
-            {/* 모달 컴포넌트 */}
+            {/* 모달 */}
             {showModal && (
                 <FindAccountModal
                     type={modalType}
