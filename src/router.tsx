@@ -1,9 +1,9 @@
 /* eslint-disable */
-import { BrowserRouter as Router, Routes, Route, Navigate, RouteObject } from "react-router-dom";
+import { RouteObject } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
 import { MainPage } from "./pages/MainPage";
-import { PhotoTestPage } from "./pages/test/PhotoTestPage";
+// import { PhotoTestPage } from "./pages/test/PhotoTestPage";
 
 const AppRouter : RouteObject[] =  [
     {
@@ -18,10 +18,10 @@ const AppRouter : RouteObject[] =  [
         path: "/main",
         element: <MainPage />
     },
-    {
-        path: "/phototest",
-        element: <PhotoTestPage />
-    },
+    // {
+    //     path: "/phototest",
+    //     element: <PhotoTestPage />
+    // },
 
 ];
 
