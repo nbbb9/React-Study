@@ -16,7 +16,7 @@ const initPost: Post = {//게시글 Form 초기값
 export const WriteModal: FC<WriteModalProps> = ({ isOpen, onClose }) => {
     if (!isOpen) return null;//조건부 랜더링(false일 경우 아무것도 랜더링하지 않음.)
 
-    const [image, setImage] = useState<File | null>(null);//이미지 상태
+    // const [image, setImage] = useState<File | null>(null);//이미지 상태
     const [postForm, setPostForm] = useState<Post>(initPost);
 
     const savePost = async () => {//게시글 등록
