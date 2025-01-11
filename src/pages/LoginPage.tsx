@@ -13,6 +13,8 @@ export const LoginPage: FC<{}> = () => {
     const [modalType, setModalType] = useState<'email' | 'password'>('email');//모달 타입(이메일 찾기 or 비밀번호 변경)
     const navigate = useNavigate();//페이지 이동을 위한 Hook
 
+    //젠킨스 자동 빌드 테스트를 위한 주석
+
     const login = async () => {//로그인
         try {
             if (!email || !password) {
