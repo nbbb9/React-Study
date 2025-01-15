@@ -12,16 +12,16 @@ const initAccount: Account = {//회원가입 입력창 초기값
 }
 
 export const SignupPage: FC<{}> = () => {
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [makeAccount, setMakeAccount] = useState<Account>(initAccount);
+    const [confirmPassword, setConfirmPassword] = useState("");//회원가입 시 비밀번호 재입력을 위한 상태
+    const [makeAccount, setMakeAccount] = useState<Account>(initAccount);//회원가입 Form
     const navigate = useNavigate();//페이지 이동을 위한 Hook
 
     const Signup = async () => {//회원가입
-        if (!makeAccount.name || !makeAccount.email || !makeAccount.password || !confirmPassword) {
+        if (!makeAccount.name || !makeAccount.email || !makeAccount.password || !confirmPassword) {//모든 값 입력 확인
             alert("모든 필드를 입력해주세요.");
             return;
         }
-        if (makeAccount.password !== confirmPassword) {
+        if (makeAccount.password !== confirmPassword) {//재입력 일치 확인
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }

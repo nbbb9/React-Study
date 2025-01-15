@@ -17,7 +17,7 @@ export const MainPage: FC<{}> = () => {
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-    const fetchPosts = async () => {
+    const fetchPosts = async () => {//게시글 불러오기
         try {
             const response = await axios.get(`${baseURL}`);
             setPosts(response.data);
@@ -39,8 +39,6 @@ export const MainPage: FC<{}> = () => {
                 <ul className="mt-6 space-y-2">
                     <li className="py-2 px-4 hover:text-2xl cursor-pointer">Post</li>
                     <li className="py-2 px-4 hover:text-2xl cursor-pointer">MyPage</li>
-                    <li className="py-2 px-4 hover:text-2xl cursor-pointer">menu</li>
-                    <li className="py-2 px-4 hover:text-2xl cursor-pointer">menu</li>
                     <li className="py-2 px-4 hover:text-2xl cursor-pointer">menu</li>
                 </ul>
             </aside>
