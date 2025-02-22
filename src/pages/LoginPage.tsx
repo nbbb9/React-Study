@@ -26,7 +26,7 @@ export const LoginPage: FC<{}> = () => {
             }
         } catch (error: unknown) {
             if (axios.isAxiosError(error) && error.response?.status === 403) {
-                alert('아이디 또는 비밀번호가 잘못되었습니다.');
+                alert('아이디 또는 비밀번호를 확인해주세요.');
             } else {
                 alert('서버에 문제가 발생했습니다.');
             }
